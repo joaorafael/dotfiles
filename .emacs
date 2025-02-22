@@ -4,8 +4,8 @@
 
 ;; on LINUX create symbolic links to .emacs and .emacs.custom.el
 ;; example:
-;; ln -s .emacs ~/dotfiles/.emacs .emacs
-;; ln -s .emacs ~/dotfiles/.emacs.custom.el .emacs.custom.el
+;; cd ~; ln -s ~/dotfiles/.emacs .emacs
+;; cd ~/.emacs.d; ln -s .emacs ~/dotfiles/.emacs.custom.el .emacs.custom.el
 
 (setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
 (load custom-file)
