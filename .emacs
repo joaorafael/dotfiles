@@ -15,13 +15,15 @@
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (global-display-line-numbers-mode)
+(setq make-backup-files nil)
 
-;;disable splash screen and startup message
-(setq inhibit-startup-message t) 
-(setq initial-scratch-message nil)
+(ido-mode 1)
+(ido-everywhere 1)
 
-;;(add-to-list 'default-frame-alist )
-;;(setq inhibit-startup-message t)
+(set-frame-font "Source Code Pro-16")
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+(define-key global-map [remap list-buffers] 'buffer-menu-other-window)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
@@ -31,6 +33,20 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package multiple-cursors
+  :ensure t)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(use-package smex
+  :ensure t)
+(global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  ;; This is your old M-x.
+  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+  
 (use-package which-key
   :ensure t
   :config (which-key-mode))
@@ -38,7 +54,6 @@
 ;; saves git messages to the magit ring. to grab when commit with M-p
 (add-hook 'git-commit-setup-hook 'git-commit-save-message)
 
-;(setq ido-enable-flex-matching t)
-;(setq ido-everywhere t)
-;(ido-mode 1)
+
+
 
