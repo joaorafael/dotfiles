@@ -1,4 +1,13 @@
-(setq custom-file "~/.emacs.custom.el")
+;; on WINDOWS setup .emacs file with the following contents
+;; (setq user-emacs-directory "C:/Users/joao.rafael/dotfiles/")
+;; (load "C:/Users/joao.rafael/dotfiles/.emacs")
+
+;; on LINUX create symbolic links to .emacs and .emacs.custom.el
+;; example:
+;; ln -s .emacs ~/dotfiles/.emacs .emacs
+;; ln -s .emacs ~/dotfiles/.emacs.custom.el .emacs.custom.el
+
+(setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
 (load custom-file)
 
 (tool-bar-mode 0)
@@ -25,6 +34,9 @@
 (use-package which-key
   :ensure t
   :config (which-key-mode))
+
+;; saves git messages to the magit ring. to grab when commit with M-p
+(add-hook 'git-commit-setup-hook 'git-commit-save-message)
 
 ;(setq ido-enable-flex-matching t)
 ;(setq ido-everywhere t)
