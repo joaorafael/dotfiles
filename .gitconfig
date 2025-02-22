@@ -1,0 +1,12 @@
+# This is Git's per-user configuration file.
+[user]
+	name = João Rafael
+	email = jjrafael@gmail.com
+[core]
+	editor = vi
+[alias]
+	ci = commit
+	co = checkout
+	cp = cherry-pick
+	l = log --oneline
+	st = stash
