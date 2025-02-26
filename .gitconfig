@@ -9,4 +9,8 @@
 	co = checkout
 	cp = cherry-pick
 	l = log --oneline
-	st = stash
+	z = stash
+	s = status
+	b = branch
+	m = merge
+	r = rebase

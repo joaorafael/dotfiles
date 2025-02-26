@@ -1,11 +1,19 @@
-;; on WINDOWS setup .emacs file with the following contents
-;; (setq user-emacs-directory "C:/Users/joao.rafael/dotfiles/")
-;; (load "C:/Users/joao.rafael/dotfiles/.emacs")
-
 ;; on LINUX create symbolic links to .emacs and .emacs.custom.el
 ;; example:
-;; cd ~; ln -s ~/dotfiles/.emacs .emacs
-;; cd ~/.emacs.d; ln -s .emacs ~/dotfiles/.emacs.custom.el .emacs.custom.el
+;; ln -s ~/dotfiles/.emacs ~/.emacs
+;; ln -s ~/dotfiles/.emacs.custom.el ~/.emacs.d/.emacs.custom.el
+
+;; on WINDOWS create symbolic link to .emacs and .emacs.custom.el
+;;
+;; open Command Prompt with Administrator Mode
+;; mklink %USERPROFILE%\AppData\Roaming\.emacs %USERPROFILE%\dotfiles\.emacs
+;; mklink %USERPROFILE%\AppData\Roaming\.emacs.d\.emacs.custom.el %USERPROFILE%\dotfiles\.emacs.custom.el
+;;
+;; or
+;;
+;; open PowerShell Administator Mode
+;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\.emacs" -Target "$env:USERPROFILE\dotfiles\.emacs"
+;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\.emacs.d\.emacs.custom.el" -Target "$env:USERPROFILE\dotfiles\.emacs.custom.el"
 
 (setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
 (load custom-file)
@@ -33,23 +41,18 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package multiple-cursors
-  :ensure t)
+(use-package multiple-cursors :ensure t)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(use-package smex
-  :ensure t)
+(use-package smex :ensure t)
 (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  ;; This is your old M-x.
-  (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
   
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
+(use-package which-key :ensure t :config (which-key-mode))
 
 ;; saves git messages to the magit ring. to grab when commit with M-p
 (add-hook 'git-commit-setup-hook 'git-commit-save-message)

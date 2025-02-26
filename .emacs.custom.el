@@ -9,7 +9,7 @@
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
  '(package-selected-packages
-   '(smex which-key use-package magit llama gruber-darker-theme gnu-elpa-keyring-update cmake-mode)))
+   '(multiple-cursors smex which-key use-package magit llama gruber-darker-theme gnu-elpa-keyring-update cmake-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
