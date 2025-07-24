@@ -5,54 +5,68 @@
 
 ;; on WINDOWS create symbolic link to .emacs and .emacs.custom.el
 ;;
-;; open Command Prompt with Administrator Mode
-;; mklink %USERPROFILE%\AppData\Roaming\.emacs %USERPROFILE%\dotfiles\.emacs
-;; mklink %USERPROFILE%\AppData\Roaming\.emacs.d\.emacs.custom.el %USERPROFILE%\dotfiles\.emacs.custom.el
+;; open PowerShell Administator Mode
+;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE/AppData/Roaming/.emacs" -Target "$env:USERPROFILE/me/dotfiles/.emacs"
+;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE/AppData/Roaming/.emacs.d/.emacs.custom.el" -Target "$env:USERPROFILE/me/dotfiles/.emacs.custom.el"
+;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE/AppData/Roaming/.emacs.rc" -Target "$env:USERPROFILE/me/dotfiles/.emacs.rc"
 ;;
 ;; or
 ;;
-;; open PowerShell Administator Mode
-;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\.emacs" -Target "$env:USERPROFILE\dotfiles\.emacs"
-;; New-Item -ItemType SymbolicLink -Path "$env:USERPROFILE\AppData\Roaming\.emacs.d\.emacs.custom.el" -Target "$env:USERPROFILE\dotfiles\.emacs.custom.el"
+;; open Command Prompt with Administrator Mode
+;; mklink %USERPROFILE%/AppData/Roaming/.emacs %USERPROFILE%/me/dotfiles/.emacs
+;; mklink %USERPROFILE%/AppData/Roaming/.emacs.d/.emacs.custom.el %USERPROFILE%/me/dotfiles/.emacs.custom.el
+;; mklink %USERPROFILE%/AppData/Roaming/.emacs.rc %USERPROFILE%/me/dotfiles/.emacs.rc
 
-(setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
-(load custom-file)
+;;(setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
+;;(load custom-file)
+
+(setq custom-file "C:/Users/joao.rafael/AppData/Roaming/.emacs.custom.el")
+(package-initialize)
+
+(add-to-list 'load-path "C:/Users/joao.rafael/AppData/Roaming/.emacs.local")
+
+(load "C:/Users/joao.rafael/AppData/Roaming/.emacs.rc/rc.el")
 
 (tool-bar-mode 0)
 ;(menu-bar-mode 0)
+(setq inhibit-startup-screen 1)
 (scroll-bar-mode 0)
 (column-number-mode 1)
 (global-display-line-numbers-mode)
 (setq make-backup-files nil)
+(define-key global-map [remap list-buffers] 'buffer-menu-other-window)
 
-(ido-mode 1)
-(ido-everywhere 1)
+(package-initialize)
+
+(require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (set-frame-font "Source Code Pro-16")
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-(define-key global-map [remap list-buffers] 'buffer-menu-other-window)
+(rc/require-theme 'gruber-darker)
 
-(require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(package-initialize)
+(rc/require 'smex 'ido-completing-read+)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(ido-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
 
-(use-package multiple-cursors :ensure t)
+(rc/require 'cl-lib)
+(rc/require 'magit)
+
+(rc/require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-(use-package smex :ensure t)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-  
-(use-package which-key :ensure t :config (which-key-mode))
+(rc/require 'which-key)
+
+;;(use-package which-key :ensure t :config (which-key-mode))
 
 ;; saves git messages to the magit ring. to grab when commit with M-p
 (add-hook 'git-commit-setup-hook 'git-commit-save-message)

@@ -5,12 +5,19 @@
 [core]
 	editor = vi
 [alias]
+	cfg = config --list --show-origin
+	al = !sh -c 'git config --list --show-origin| grep alias'
 	ci = commit
 	co = checkout
 	cp = cherry-pick
-	l = log --oneline
+	cpm = cherry-pick -m 1
+	l = log --oneline --pretty=format:'%C(yellow)%h %C(white)%ad %C(green)%an %C(auto)%s' --date=format:'%Y%m%d %H%M'
 	z = stash
 	s = status
 	b = branch
-	m = merge
-	r = rebase
+	r = restore --staged
+	ls = diff --name-only
+	d = diff --cached
+	df = !sh -c 'git diff $1^ $1 -- $2' -
+[includeIf "gitdir:C:/EFACEC/Source/GIT/"]
+	path = C:/EFACEC/Source/GIT/.gitconfig
